@@ -5,9 +5,9 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
 function DashboardShell() {
-  const { widgets, addWidget } = useDashboardStore();
+  const { widgets, addWidget, layout, setLayout } = useDashboardStore();
 
-  const layout = widgets.map((widget, index) => ({
+  const defaultLayout = widgets.map((widget, index) => ({
     i: widget.id,
     x: (index % 2) * 6,
     y: Math.floor(index / 2) * 4,
@@ -26,10 +26,11 @@ function DashboardShell() {
 
       <GridLayout
         className="layout"
-        layout={layout}
+        layout={layout.length ? layout : defaultLayout}
         cols={12}
         rowHeight={80}
         width={1200}
+        onLayoutChange={(newLayout) => setLayout(newLayout)}
       >
         {widgets.map((widget) => (
           <div key={widget.id}>
