@@ -1,13 +1,28 @@
 import { useEffect, useState } from "react";
 import { fetchWidgetData } from "../../services/api";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer
+} from "recharts";
 
 function BarChartWidget() {
   const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    fetchWidgetData("bar").then(setData);
+    fetchWidgetData("bar")
+      .then((res) => setData(res))
+      .catch(() => setError("Failed to load data"))
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div style={{ height: 300 }}>
