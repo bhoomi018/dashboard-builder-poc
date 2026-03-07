@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api/widgets"
+  baseURL: "https://dashboard-backend1-5xgg.onrender.com"
 });
 
 export async function fetchWidgetData(type: string) {
